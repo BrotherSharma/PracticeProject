@@ -7,5 +7,6 @@ namespace MVC.Models
         public string Gender{get;set;}
 
         public string image{get;set;}
+        public string document{get; set;}
     }
 }
