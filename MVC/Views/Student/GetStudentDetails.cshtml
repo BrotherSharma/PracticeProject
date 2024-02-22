@@ -1,0 +1,47 @@
+@model MVC.Models.tblstudent
+
+<h2 class="mt-4">Student Details</h2>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-3">Student ID</dt>
+                <dd class="col-sm-9">@Model.id</dd>
+                
+                <dt class="col-sm-3">Student Name</dt>
+                <dd class="col-sm-9">@Model.studentname</dd>
+                
+                <dt class="col-sm-3">Student Gender</dt>
+                <dd class="col-sm-9">@Model.gender</dd>
+                
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Model.address</dd>
+                
+                <dt class="col-sm-3">Languages</dt>
+                <dd class="col-sm-9">
+                    @foreach (var language in Model.language.Split(','))
+                    {
+                        <span>@language</span><br />
+                    }
+                </dd>
+                
+                <dt class="col-sm-3">Course ID</dt>
+                <dd class="col-sm-9">@Model.course_id</dd>
+                
+                <dt class="col-sm-3">Phone Number</dt>
+                <dd class="col-sm-9">@Model.phonenumber</dd>
+                
+                <dt class="col-sm-3">Date of Birth</dt>
+                <dd class="col-sm-9">@Model.dbo</dd>
+                
+                <dt class="col-sm-3">Image</dt>
+                <dd class="col-sm-9">@Model.image</dd>
+                
+                <dt class="col-sm-3">Document</dt>
+                <dd class="col-sm-9">@Model.document</dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

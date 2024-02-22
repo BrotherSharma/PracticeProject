@@ -1,7 +1,30 @@
+using MVC.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IStudentRepositories, StudentRepositories>();
+builder.Services.AddSingleton<IUseriRepositories, UserRepositories>();
+builder.Services.AddSingleton<CommanRepositories>();
+
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthentication("MyCookieAuthenticationSchema")
+    .AddCookie("MyCookieAuthenticationSchema",options =>
+    {
+        options.LoginPath = "/User/Login";
+        options.AccessDeniedPath = "/User/AccessDenied";
+    });
+builder.Services.AddSession(options =>
+{
+    // Set a short timeout for easy testing.
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
 
 var app = builder.Build();
 
@@ -17,7 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(

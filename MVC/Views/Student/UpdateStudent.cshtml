@@ -1,0 +1,100 @@
+@model MVC.Models.tblstudent
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Update Student Information</h2>
+    <form action="UpdateStudent" method="post" class="row g-3">
+        <input type="hidden" name="Id" value="@Model.id"/>
+    @* <form asp-controller="Student" asp-action="UpdateStudent" method="post" enctype="multipart/form-data"> *@
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Student Name -->
+                <div class="form-group">
+                    <label for="Name">Student Name:</label>
+                    <input asp-for="studentname" class="form-control" />
+                </div>
+
+                <!-- Student DOB -->
+                <div class="form-group">
+                    <label for="Dob">Student DOB:</label>
+                    <input asp-for="dbo" type="date" class="form-control" />
+                </div>
+
+                <!-- Student Gender -->
+                <div class="form-group">
+                    <label>Student Gender:</label>
+                    <div class="form-check">
+                        <input asp-for="gender" type="radio" value="Male" class="form-check-input" />
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="gender" type="radio" value="Female" class="form-check-input" />
+                        <label class="form-check-label">Female</label>
+                    </div>
+                </div>
+
+                <!-- Student Address -->
+                <div class="form-group">
+                    <label for="Address">Student Address:</label>
+                    <textarea asp-for="address" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Checkboxes for a list of values -->
+                <div class="form-group">
+                    <label>Languages:</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="english" name="languages" value="English" class="form-check-input" />
+                        <label for="english" class="form-check-label">English</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="spanish" name="languages" value="Spanish" class="form-check-input" />
+                        <label for="spanish" class="form-check-label">Spanish</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" id="french" name="languages" value="french" class="form-check-input" />
+                        <label for="french" class="form-check-label">French</label>
+                    </div>
+                    
+                </div>
+
+                <!-- Course Dropdown -->
+                <div class="form-group">
+                    <label for="Course">Course:</label>
+                    @* Assuming you want to update the course as well *@
+                    <select asp-for="course_id" asp-items="@(new SelectList(ViewBag.Course, "CourseID", "CourseName"))" class="form-control">
+                        <option value="">-- Select Course --</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="PhotoPath" name="PhotoPath" accept="image/*" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="document" class="form-label">Document</label>
+                    <input type="file" class="form-control" id="DocumentPath" name="DocumentPath" accept=".pdf, .doc, .docx" required>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="PhoneNumber">Phone Number:</label>
+                    <input asp-for="phonenumber" class="form-control" />
+                </div>
+
+                 
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <input type="submit" value="UpdateData" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,89 @@
+@model List<tblstudent>
+
+
+@{
+    ViewData["Title"] = "GetAllStudents";
+    
+    int pageSize = 5;  // Set the number of records per page
+    int currentPage;
+    if (!int.TryParse(Context.Request.Query["page"], out currentPage) || currentPage < 1)
+    {
+        currentPage = 1;
+    }
+   
+}
+<div class="d-flex justify-content-between align-items-center">
+    @if (ViewBag.UserName != null)
+    {
+        <span>Welcome, @ViewBag.UserName!</span>
+    }
+    else
+    {
+        <span>Not logged in</span>
+    }
+
+    <a asp-controller="User" asp-action="Login" class="btn btn-link">Logout</a>
+</div>
+
+<h2>Student Details</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Insert">Add New Student</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Student Id</th>
+                <th>Student Name</th>
+                <th>Student Gender</th>
+                <th>Address</th>
+                <th>Language</th>
+                <th>CourseId</th>
+                <th>PhoneNumber</th>
+                <th>DateOfBirth</th>
+                <th>Image</th>
+                <th>Document</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+             @foreach (var student in Model.Skip((currentPage - 1) * pageSize).Take(pageSize))
+            {
+                <tr>
+                    <td>@student.id</td>
+                    <td>@student.studentname</td>
+                    <td>@student.gender</td>
+                    <td>@student.address</td>
+                    <td>@student.language</td>
+                    <td>@student.course_id</td>
+                    <td>@student.phonenumber</td>
+                    <td>@student.dbo</td>
+                    <td>@student.image</td>
+                    <td>@student.document</td>
+                    
+                    <td>
+                        <a class="btn btn-info" asp-action="GetStudentDetails" asp-route-id="@student.id">Details</a>
+                        <a class="btn btn-warning" asp-action="UpdateStudent" asp-route-id="@student.id">Edit</a>
+                       <a asp-action="DeleteStudent" asp-route-id="@student.id" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this student Record?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= pageSize; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="?page=@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+   
+</div>
