@@ -8,5 +8,7 @@ namespace MVC.Models
 
         public string image{get;set;}
         public string document{get; set;}
+    
+    public int phonenumber{get; set;}
     }
 }
