@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bharg\\PracticeProject\\MVC\\MVC.csproj": {}
+    "C:\\Users\\bharg\\OneDrive\\Desktop\\PracticeProject-1\\MVC\\MVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bharg\\PracticeProject\\MVC\\MVC.csproj": {
+    "C:\\Users\\bharg\\OneDrive\\Desktop\\PracticeProject-1\\MVC\\MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bharg\\PracticeProject\\MVC\\MVC.csproj",
+        "projectUniqueName": "C:\\Users\\bharg\\OneDrive\\Desktop\\PracticeProject-1\\MVC\\MVC.csproj",
         "projectName": "MVC",
-        "projectPath": "C:\\Users\\bharg\\PracticeProject\\MVC\\MVC.csproj",
+        "projectPath": "C:\\Users\\bharg\\OneDrive\\Desktop\\PracticeProject-1\\MVC\\MVC.csproj",
         "packagesPath": "C:\\Users\\bharg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bharg\\PracticeProject\\MVC\\obj\\",
+        "outputPath": "C:\\Users\\bharg\\OneDrive\\Desktop\\PracticeProject-1\\MVC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bharg\\AppData\\Roaming\\NuGet\\NuGet.Config",
