@@ -1,0 +1,95 @@
+@{
+    ViewBag.Title = "Index";
+      @* Layout = "~/Views/Shared/_ProducttLayout.cshtml"; *@
+}
+
+
+<h2>Index</h2>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+     if(localStorage.getItem('token') == null)
+    {
+        window.location = '/MVCUser/Login';
+    }
+
+
+    $(document).ready(function () {
+        LoadProduct();
+    });
+    function LoadProduct() {
+        var settings = {
+            "url": "http://localhost:5049/api/StudentApi/",
+            "method":"GET",
+            "timeout":0,
+            "headers" : {"Authorization" : 'Bearer ' + localStorage.getItem('token') }
+        };
+
+
+        $.ajax(settings).done(function(response){
+            var Products ="";
+            $.each(response,
+                function(index,value){
+                    Products += '<tr>'
+                    + '<td> <a href="/MVCStudent/Update?id=' + value.id + '" class="text text-primary">Edit</a></td>'
+                    + '<td>' + value.studentname + '</td>'
+                    + '<td>' + value.gender + '</td>'
+                    + '<td>' + value.address + '</td>'
+                    + '<td>' + value.language + '</td>'
+                    + '<td>' + value.course_id + '</td>'
+                    + '<td>' + value.phonenumber + '</td>'
+                    + '<td>' + value.dbo + '</td>'
+                    + '<td>' + value.image + '</td>'
+                    + '<td>' + value.document + '</td>'
+
+                    + '<td> <a href="#" onclick="DeleteProduct(' + value.id + ')" class="text text-danger">Delete</a></td>'
+                    +'</tr>';
+                });
+            $('#tableProduct').append(Products);
+            console.log(response);
+        });
+    }
+
+
+    function DeleteProduct(id){
+        if(confirm("Do you want to delete") == true){
+            var settings = {
+                "url": "http://localhost:5049/api/StudentApi/" + id,
+                "method":"DELETE",
+                "timeout":0,
+               "headers" : {"Authorization" : 'Bearer ' + localStorage.getItem('token') }
+            }
+           $.ajax(settings).done(function(response){
+                    window.location = "/MVCStudent/Index";
+                });
+             
+        }
+    }
+</script>
+
+
+<br /><br />
+
+
+<a href="/MVCStudent/Update">Add New Student</a>
+<table style="width:100%" class="table-bordered table-condensed table-hover table-striped" id="tableProduct">
+    <thead>
+        <tr>
+            <th>Edit</th>
+            <th>student Name</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Language</th>
+            <th>course_id</th>
+            <th>Phone No.</th>
+            <th>Date of Birth</th>
+            <th>Image</th>\
+            <th>Document</th>
+
+            <th>Delete</th>
+        </tr>
+    </thead>
+</table>

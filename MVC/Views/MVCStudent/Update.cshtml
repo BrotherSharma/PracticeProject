@@ -1,0 +1,167 @@
+@{
+    ViewBag.Title = "Update";
+    @* Layout = "~/Views/Shared/_ProducttLayout.cshtml"; *@
+}
+
+<h2>Update</h2>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+    $(document).ready(function () {
+        if(@ViewBag.id > 0)
+        {
+            LoadOneProduct();
+        }
+    });
+
+
+    function LoadOneProduct(){
+        var settings={
+            "url": "http://localhost:5049/api/StudentApi/" + @ViewBag.id,
+            "method": "GET",
+            "timeout": 0,
+            "headers": {"Authorization": 'Bearer ' + localStorage.getItem('token')}
+        };
+
+
+        $.ajax(settings).done(function (response) {
+        
+            $("#txtName").val(response.studentname),
+            $("#txtGender").val(response.gender),
+            $("#txtAddress").val(response.address),
+            $("#txtLanguage").val(response.language),
+            $("#txtCourese_id").val(response.course_id),
+            $("#txtPhonenumber").val(response.phonenumber),
+            $("#txtDbo").val(response.dbo),
+            $("#txtImage").val(response.image),
+            $("#txtDocument").val(response.document)
+         
+        });
+    }
+
+
+   function UpdateProduct() {
+    var addProduct = {
+        studentname: $("#txtName").val(),
+        gender: $("#txtGender").val(),
+        Address: $("#txtAddress").val(),
+        language: $("#txtLanguage").val(),
+        course_id: $("#txtCourese_id").val(),
+        phonenumber: $("#txtPhonenumber").val(),
+        dbo: $("#txtDbo").val(),
+        image: $("#txtImage").val(),
+        document: $("#txtDocument").val()
+        // Include additional fields if needed
+    };
+
+    var updateProduct = {
+        Id: @ViewBag.id,
+        studentname: $("#txtName").val(),
+        gender: $("#txtGender").val(),
+        address: $("#txtAddress").val(),
+        language: $("#txtLanguage").val(),
+        course_id: $("#txtCourese_id").val(),
+        phonenumber: $("#txtPhonenumber").val(),
+        dbo: $("#txtDbo").val(),
+        image: $("#txtImage").val(),
+        document: $("#txtDocument").val()
+        // Include additional fields if needed
+    };
+
+    var settings = {
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ' + localStorage.getItem('token')
+        }
+    };
+
+    if (@ViewBag.id == 0) {
+        settings.url = "http://localhost:5049/api/StudentApi";
+        settings.method = "POST"; // Add forward slash
+        settings.data = JSON.stringify(addProduct);
+    } else {
+        settings.url = "http://localhost:5049/api/StudentApi/";
+        settings.method = "PUT";
+        settings.data = JSON.stringify(updateProduct);
+    }
+
+    $.ajax(settings)
+        .done(function (response) {
+            alert("Successfully Updated!");
+            console.log("Redirection to /MVCStudent/Index...");
+            window.location = "/MVCStudent";
+        })
+      
+
+}
+
+
+
+</script>
+<div class="form-horizontal">
+    <div class="form-group">
+        <div>
+            <input type="hidden" name="txtId" id="txtId" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="txtName">Name</label>
+            <input type="text" name="txtName" id="txtName" class="form-control" />
+        </div>
+
+
+        <div class="form-group">
+        <label for="txtGender">Gender</label>
+        <input type="text" name="txtGender" id="txtGender" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtAddress">Address</label>
+        <input type="text" name="txtAddress" id="txtAddress" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtLanguage">Language</label>
+        <input type="text" name="txtLanguage" id="txtLanguage" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtCourese_id">Course ID</label>
+        <input type="text" name="txtCourese_id" id="txtCourese_id" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtPhonenumber">Phone Number</label>
+        <input type="text" name="txtPhonenumber" id="txtPhonenumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtDbo">Date of Birth</label>
+        <input type="text" name="txtDbo" id="txtDbo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtImage">Image</label>
+        <input type="text" name="txtImage" id="txtImage" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="txtDocument">Document</label>
+        <input type="text" name="txtDocument" id="txtDocument" class="form-control" />
+    </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Save" onclick="UpdateProduct()" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+</div>
