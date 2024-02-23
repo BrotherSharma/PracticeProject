@@ -10,13 +10,15 @@ namespace MVC.Repositories
     public interface IStudentRepositories
     {
         //Declaring Methods in Interface
-        tblStudent GetOne (int id);
-         List<tblStudent> GetAll();
+        tblstudent GetOne (int id);
+         List<tblstudent> GetAll();
 
-        void Insert (tblStudent stud);
+         List<tblCourse> GetCourseNames();
+
+        void Insert (tblstudent stud);
 
 
-        void Update(tblStudent stud);
+        void Update(tblstudent stud);
 
 
         void  Delete (int id);

@@ -24,7 +24,7 @@ namespace MVC.Repositories
                conn.Close();
         }
 
-        public tblStudent GetOne(int id)
+        public tblstudent GetOne(int id)
         {
              try
     {
@@ -36,7 +36,7 @@ namespace MVC.Repositories
 
         if (reader.Read())
         {
-            return new tblStudent
+            return new tblstudent
             {
                 id = Convert.ToInt32(reader["c_student_id"]),
                 studentname = reader["c_student_name"].ToString(),
@@ -68,9 +68,9 @@ namespace MVC.Repositories
     }
         }
 
-        public List<tblStudent> GetAll()
+        public List<tblstudent> GetAll()
 {
-    List<tblStudent> students = new List<tblStudent>();
+    List<tblstudent> students = new List<tblstudent>();
 
     try
     {
@@ -81,7 +81,7 @@ namespace MVC.Repositories
 
         while (reader.Read())
         {
-            tblStudent student = new tblStudent
+            tblstudent student = new tblstudent
             {
                 id = Convert.ToInt32(reader["c_student_id"]),
                 studentname = reader["c_student_name"].ToString(),
@@ -113,7 +113,7 @@ namespace MVC.Repositories
 
         }
 
-        public void Insert(tblStudent student)
+        public void Insert(tblstudent student)
         {
            conn.Open();
             using var command = new NpgsqlCommand("INSERT INTO t_student_crud(c_student_name, c_gender, c_address, c_language, c_course_id, c_phone_number, c_dateofbirth, c_image, c_document) VALUES (@studentname, @gender, @address, @language, @course_id, @phonenumber, @dbo, @image, @document)", conn);
@@ -137,7 +137,7 @@ namespace MVC.Repositories
             conn.Close();
         }
 
-        public void Update(tblStudent student)
+        public void Update(tblstudent student)
         {
              conn.Open();
         using var command = new NpgsqlCommand("UPDATE t_student_crud SET c_student_name=@Name, c_gender=@Gender, c_address=@Address, c_language=@Languages, c_course_id=@Course, c_phone_number=@PhoneNumber, c_dateofbirth=@Dob, c_image=@PhotoPath, c_document=@DocumentPath WHERE c_student_id=@id ", conn);
@@ -158,5 +158,41 @@ namespace MVC.Repositories
 
 
         }
+
+         public List<tblCourse> GetCourseNames()
+    {
+        List<tblCourse> courses = new List<tblCourse>();
+        try
+        {
+            conn.Open();
+            using (var command = new NpgsqlCommand("SELECT c_course_id,c_course_name FROM t_course", conn))
+            using (var dr = command.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    var crs = new tblCourse
+                    {
+                        CourseID = Convert.ToInt32(dr["c_course_id"]),
+                        CourseName = dr["c_course_name"].ToString()
+                    };
+                    courses.Add(crs);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching courses: {ex.Message}");
+        }
+        finally
+        {
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+        }
+        return courses;
+    }
+
+
     }
 }
